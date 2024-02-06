@@ -1,5 +1,5 @@
 "use client";
-import utils from "@/app/utils/utils";
+import utils from "@/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
