@@ -14,6 +14,7 @@ const profileSlice = createSlice({
     setProfile(state, action) {
       state.userId = action.payload;
       state.nickname = utils.nickname.getRandomNickName();
+      console.log(state.nickname);
     },
     updateNickname(state, action) {
       state.nickname = action.payload;

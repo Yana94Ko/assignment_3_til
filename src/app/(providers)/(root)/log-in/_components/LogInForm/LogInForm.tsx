@@ -1,6 +1,8 @@
 "use client";
 
 import { useAuth } from "@/app/(providers)/_contexts/auth.context";
+import { useAppDispatch } from "@/lib/redux/reducers/hook";
+import { setProfile } from "@/lib/redux/reducers/profile.reducer";
 import { FormEventHandler, useState } from "react";
 
 function LogInForm() {
@@ -8,6 +10,7 @@ function LogInForm() {
   const [pw, setPw] = useState("");
 
   const auth = useAuth();
+  const dispatch = useAppDispatch();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -19,6 +22,7 @@ function LogInForm() {
 
     if (data === "OK" && response.status === 200) {
       auth.setIsLoggedIn(true);
+      dispatch(setProfile(id));
     } else {
       alert("로그인 실패~");
     }
