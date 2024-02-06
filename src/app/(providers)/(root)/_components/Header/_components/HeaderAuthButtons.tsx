@@ -19,7 +19,7 @@ function HeaderAuthButtons() {
     <div className="flex gap-x-4 items-center">
       {isLoggedIn ? (
         <>
-          <Link href="/til/my-page" className="flex gap-x-1 leading-4">
+          <Link href="/my-page" className="flex gap-x-1 leading-4">
             {nickname}님 마이페이지
             <TfiWrite className="leading-4" />
           </Link>
