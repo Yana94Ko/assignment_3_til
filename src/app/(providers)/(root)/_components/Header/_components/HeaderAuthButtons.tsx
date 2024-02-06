@@ -5,11 +5,16 @@ import { TfiWrite } from "react-icons/tfi";
 import { IoIosLogIn } from "react-icons/io";
 import { useAuth } from "@/app/(providers)/_contexts/auth.context";
 import { useAppSelector } from "@/lib/redux/reducers/hook";
+import { useRouter } from "next/navigation";
 
 function HeaderAuthButtons() {
-  const { isLoggedIn } = useAuth();
+  const router = useRouter();
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   const nickname = useAppSelector((state) => state.profile.nickname);
-  console.log(nickname);
+  const handleClickSignOut = () => {
+    setIsLoggedIn(false);
+    router.replace("/");
+  };
   return (
     <div className="flex gap-x-4 items-center">
       {isLoggedIn ? (
@@ -18,6 +23,7 @@ function HeaderAuthButtons() {
             {nickname}님 마이페이지
             <TfiWrite className="leading-4" />
           </Link>
+          <span onClick={handleClickSignOut}>로그아웃</span>
           <Link href="/til/write" className="flex gap-x-1 leading-4">
             TIL 쓰러가기
             <TfiWrite className="leading-4" />

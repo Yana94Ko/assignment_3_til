@@ -6,18 +6,27 @@ import { useAppDispatch } from "@/lib/redux/reducers/hook";
 import { setProfile } from "@/lib/redux/reducers/profile.reducer";
 import { FormEventHandler, useState } from "react";
 
-function LogInForm() {
+function SignInForm() {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [pwCheck, setPwCheck] = useState("");
 
   const auth = useAuth();
   const dispatch = useAppDispatch();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
-    const url = `${window.location.origin}/api/auth/log-in`;
-    const options = { method: "POST", body: JSON.stringify({ id, pw }) };
+    if (id === "" || pw === "" || pwCheck === "") {
+      alert(
+        "아이디와 비밀번호 비밀번호 체크를 모두 입력하세요." + id + pw + pwCheck
+      );
+      return;
+    }
+    const url = `${window.location.origin}/api/auth/sign-up`;
+    const options = {
+      method: "POST",
+      body: JSON.stringify({ id, pw, pwCheck }),
+    };
     const response = await fetch(url, options);
     const data = await response.json();
 
@@ -25,16 +34,21 @@ function LogInForm() {
       auth.setIsLoggedIn(true);
       dispatch(setProfile(id));
     } else {
-      alert("로그인 실패~");
+      alert("회원가입 실패. \n사유 :" + data);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <IdPwdInput id={id} pw={pw} setId={setId} setPw={setPw} />
-      <button type="submit">로그인하기</button>
+      <input
+        type="password"
+        value={pwCheck}
+        onChange={(e) => setPwCheck(e.target.value)}
+      />
+      <button type="submit">회원가입하기</button>
     </form>
   );
 }
 
-export default LogInForm;
+export default SignInForm;
