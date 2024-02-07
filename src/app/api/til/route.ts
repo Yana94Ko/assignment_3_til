@@ -23,3 +23,14 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(til);
 }
+export async function GET() {
+  const response = await fetch(
+    "https://port-0-ballang-server-qrd2als49b8m4.sel5.cloudtype.app/til",
+    {
+      method: "GET",
+    }
+  );
+  const tils = await response.json();
+
+  return NextResponse.json(tils);
+}
